@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khata — Sales & Debit</title>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--ink:#171a21;--muted:#747b87;--line:#e7e9ed;--accent:#171a21;--amber:#a15c00;--green:#157347}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+header{background:#111318;color:#fff}.head{max-width:1180px;margin:auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;gap:11px;align-items:center}.logo{width:38px;height:38px;border-radius:10px;background:#fff;color:#111318;display:grid;place-items:center;font-weight:800}.brand h1{font-size:18px;margin:0}.brand p{margin:2px 0 0;font-size:11px;color:#aeb3bd}
+.wrap{max-width:1180px;margin:auto;padding:24px}.top-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}.stat small{font-size:11px;color:var(--muted)}.stat strong{display:block;font-size:24px;margin-top:7px}.amber{color:var(--amber)!important}
+.layout{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}.panel-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.panel-title h2{font-size:15px;margin:0}.panel-title span{font-size:11px;color:var(--muted)}
+label{display:block;font-size:11px;font-weight:700;color:#555d68;margin-bottom:6px}.field input,.field select{width:100%;height:39px;border:1px solid #dfe2e7;border-radius:8px;padding:8px 10px;background:#fff;outline:0;font-size:13px}.field input:focus,.field select:focus{border-color:#9298a2}
+.date-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}.date-note{font-size:10px;color:var(--muted);margin-top:5px}
+.items{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:15px}.item-head,.item{display:grid;grid-template-columns:1fr 105px 75px 110px 35px;gap:8px;align-items:center;padding:9px}.item-head{font-size:10px;text-transform:uppercase;color:var(--muted);background:#fafafa;font-weight:700}.item{border-top:1px solid var(--line)}.item input{width:100%;height:34px;border:1px solid #dfe2e7;border-radius:7px;padding:7px;font-size:12px}.line-total{font-size:12px;font-weight:700}.remove{width:32px;height:32px;padding:0;background:#fff;border:1px solid var(--line);color:#a33;border-radius:7px}
+.add-product{margin-top:10px;background:#fff;border:1px dashed #cdd1d8;color:#4b5563;width:100%;height:36px}.summary{margin-top:14px;background:#fafafa;border-radius:10px;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.summary-row{display:flex;justify-content:space-between;font-size:12px}.summary-row strong{font-size:14px}.save-row{display:flex;justify-content:flex-end;margin-top:12px}.save{background:#171a21;color:#fff;height:40px;padding:0 18px}
+.filters{display:flex;gap:8px;margin-bottom:12px}.filters input,.filters select{height:36px;border:1px solid #dfe2e7;border-radius:8px;padding:7px 9px}.filters input{flex:1}.btn{height:36px;background:#fff;border:1px solid #dfe2e7;border-radius:8px;padding:0 11px;font-size:11px;font-weight:700}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:800px;font-size:12px}th,td{padding:11px;border-bottom:1px solid #eef0f2;text-align:left;vertical-align:top}th{font-size:10px;text-transform:uppercase;color:var(--muted);background:#fafafa}.product-lines span{display:block;line-height:1.65}.badge{display:inline-block;padding:4px 7px;border-radius:99px;font-size:10px}.badge.due{background:#fff5e8;color:#9b5a08}.badge.paid{background:#edf9f2;color:var(--green)}.action{height:30px;padding:0 8px;font-size:10px;background:#fff;border:1px solid #e1e4e8;border-radius:6px;margin:2px}
+.customer-list{display:grid;gap:10px}.customer{border:1px solid var(--line);border-radius:10px;padding:13px}.customer-head{display:flex;justify-content:space-between}.customer h3{font-size:14px;margin:0}.customer small{color:var(--muted);font-size:10px}.customer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}.customer-stats div{background:#fafafa;border-radius:7px;padding:8px}.customer-stats small{display:block}.customer-stats b{font-size:12px;display:block;margin-top:2px}.empty{text-align:center;color:var(--muted);padding:28px;font-size:12px}
+footer{max-width:1180px;margin:auto;padding:0 24px 24px;color:#8a9099;font-size:10px;text-align:center}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.top-cards{grid-template-columns:1fr 1fr}.wrap{padding:15px}}
+@media(max-width:600px){.top-cards{grid-template-columns:1fr}.date-row{grid-template-columns:1fr}.item-head{display:none}.item{grid-template-columns:1fr 75px 60px 85px 32px}.filters{flex-wrap:wrap}.filters input{flex-basis:100%}}
+@media print{header{background:#fff;color:#000}.add-panel,.filters,.action,.top-cards,footer{display:none!important}.panel{border:0}.wrap{padding:0}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="brand"><div class="logo">ख</div><div><h1>My Khata</h1><p>Personal Sales & Debit Tracker</p></div></div><div style="font-size:11px;color:#aeb3bd">BS • Bikram Sambat</div></div></header>
+
+<div class="wrap">
+<div class="top-cards">
+<div class="stat"><small>Total Sales</small><strong id="totalSales">Rs. 0</strong></div>
+<div class="stat"><small>Amount Received</small><strong id="totalPaid">Rs. 0</strong></div>
+<div class="stat"><small>Outstanding Debit</small><strong class="amber" id="totalDue">Rs. 0</strong></div>
+</div>
+
+<div class="layout">
+<div>
+<div class="panel add-panel">
+<div class="panel-title"><h2>New Sale</h2><span>All dates are BS</span></div>
+<div class="field"><label>Customer</label><input id="customer" placeholder="Customer name"></div>
+
+<div style="margin-top:12px"><label>Sale Date (BS)</label>
+<div class="date-row">
+<div class="field"><select id="year"></select></div>
+<div class="field"><select id="month"></select></div>
+<div class="field"><select id="day"></select></div>
+</div>
+<div class="date-note" id="adNote"></div>
+</div>
+
+<div class="items"><div class="item-head"><div>Product</div><div>Price</div><div>Qty</div><div>Total</div><div></div></div><div id="items"></div></div>
+<button class="add-product" onclick="addItem()">＋ Add another product</button>
+
+<div class="summary">
+<div class="summary-row"><span>Invoice total</span><strong id="invoiceTotal">Rs. 0</strong></div>
+<div class="summary-row"><span>Paid now</span><input id="paid" type="number" min="0" step="0.01" value="0" style="height:28px;width:120px;border:1px solid #ddd;border-radius:6px;padding:5px"></div>
+<div class="summary-row"><span>Remaining debit</span><strong class="amber" id="remaining">Rs. 0</strong></div>
+</div>
+<div class="save-row"><button class="save" onclick="saveSale()">Save Sale</button></div>
+</div>
+
+<div class="panel">
+<div class="panel-title"><h2>Sales Records</h2><span id="count">0 records</span></div>
+<div class="filters"><input id="search" placeholder="Search customer or product..."><select id="filter"><option value="">All customers</option></select><button class="btn" onclick="printReport()">PDF</button><button class="btn" onclick="exportWord()">Word</button><button class="btn" onclick="exportCSV()">CSV</button></div>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Products</th><th>Total</th><th>Paid</th><th>Due</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+</div>
+</div>
+
+<div>
+<div class="panel"><div class="panel-title"><h2>Customers</h2><span>Outstanding balances</span></div><div id="customers" class="customer-list"></div></div>
+<div class="panel"><div class="panel-title"><h2>Data</h2></div><div class="data-actions"><button class="btn" onclick="backup()">Download Backup</button><button class="btn" onclick="restoreBackup()">Restore File</button><button class="btn" onclick="restoreAutoBackup()">Restore Auto</button><button class="btn" onclick="clearAll()">Clear All</button></div><p id="backupStatus" style="font-size:10px;color:#8a9099;line-height:1.5;margin:10px 0 0">Automatic backup: waiting for your first saved record.</p><input id="restoreFile" type="file" accept="application/json,.json" style="display:none" onchange="restoreFromFile(event)"><p style="font-size:10px;color:#8a9099;line-height:1.5;margin-bottom:0">Records are stored in this browser. An automatic local backup is also kept. For long-term safety, download a backup file.</p></div>
+</div>
+</div>
+</div>
+<footer>Simple personal<script>
+
+const KEY='my_khata_bs_v1';
+const MONTHS=[
+ ['Baisakh','बैशाख'],['Jestha','जेठ'],['Ashadh','असार'],['Shrawan','श्रावण'],['Bhadra','भाद्र'],['Ashwin','असोज'],['Kartik','कार्तिक'],['Mangsir','मंसिर'],['Poush','पौष'],['Magh','माघ'],['Falgun','फाल्गुन'],['Chaitra','चैत्र']
+];
+// Month lengths for recent BS years, including the current 2083 BS year.
+// 2083 is 31,31,32,31,31,30,31,30,29,30,30,30 in the selected calendar dataset.
+const DAYS={
+2076:[31,32,31,32,31,30,30,30,29,29,30,30],
+2077:[31,32,31,32,31,30,30,30,29,30,29,31],
+2078:[31,31,31,32,31,31,30,29,30,29,30,30],
+2079:[31,31,32,31,31,31,30,29,30,29,30,30],
+2080:[31,32,31,32,31,30,30,30,29,29,30,30],
+2081:[31,31,32,32,31,30,30,30,29,30,30,30],
+2082:[30,32,31,32,31,30,30,30,29,30,30,30],
+2083:[31,31,32,31,31,30,31,30,29,30,30,30],
+2084:[31,31,32,31,31,30,30,30,29,30,30,30],
+2085:[31,32,31,32,30,31,30,30,29,30,30,30],
+2086:[30,32,31,32,31,30,30,30,29,30,30,30],
+2087:[31,31,32,31,31,31,30,30,29,30,30,30],
+2088:[30,31,32,32,30,31,30,30,29,30,30,30]
+};
+const YEAR=2083;
+let sales=JSON.parse(localStorage.getItem(KEY)||'[]');
+let old=JSON.parse(localStorage.getItem('simple_sales_tracker_v2')||'[]');
+if(!sales.length&&old.length){sales=old;localStorage.setItem(KEY,JSON.stringify(sales))}
+const $=id=>document.getElementById(id);
+function money(n){return 'Rs. '+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
+function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function totalOf(s){return s.items.reduce((a,i)=>a+(Number(i.price)||0)*(Number(i.qty)||0),0)}
+function autoBackup(){try{localStorage.setItem('my_khata_bs_auto_backup_v2',JSON.stringify(sales));localStorage.setItem('my_khata_bs_auto_backup_time_v2',new Date().toISOString());updateBackupStatus()}catch(e){console.warn('Auto backup failed',e)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(sales));autoBackup();render()}
+function updateBackupStatus(){const e=$('backupStatus');if(!e)return;const t=localStorage.getItem('my_khata_bs_auto_backup_time_v2');e.textContent=t?'Automatic backup: '+new Date(t).toLocaleString():'Automatic backup: waiting for your first saved record.'}
+function restoreBackup(){const f=$('restoreFile');if(f)f.click()}
+function restoreFromFile(ev){const file=ev.target.files&&ev.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data))throw new Error('Invalid format');if(!confirm('Restore this backup? Current records will be replaced.'))return;sales=data;localStorage.setItem(KEY,JSON.stringify(sales));autoBackup();render();alert('Backup restored successfully.')}catch(e){alert('This backup file is not valid.')}};reader.readAsText(file);ev.target.value=''}
+function restoreAutoBackup(){const raw=localStorage.getItem('my_khata_bs_auto_backup_v2');if(!raw)return alert('No automatic backup is available yet.');if(!confirm('Restore the latest automatic backup? Current records will be replaced.'))return;try{sales=JSON.parse(raw);localStorage.setItem(KEY,JSON.stringify(sales));render();alert('Automatic backup restored successfully.')}catch(e){alert('Automatic backup is damaged.')}}
+function setupDates(){
+ let years=Object.keys(DAYS).map(Number).sort((a,b)=>b-a);
+ $('year').innerHTML=years.map(y=>`<option value="${y}">${y} BS</option>`).join('');
+ $('year').value=YEAR;$('month').innerHTML=MONTHS.map((m,i)=>`<option value="${i}">${m[0]} / ${m[1]}</option>`).join('');
+ $('month').value=5;updateDays();$('day').value=2;showADNote();
+}
+function updateDays(){
+ let y=Number($('year').value),m=Number($('month').value),n=(DAYS[y]||DAYS[YEAR])[m];
+ $('day').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('');
+ showADNote();
+}
+function showADNote(){
+ // The current 2083 mapping is used to provide a helpful AD equivalent for the date shown.
+ let y=Number($('year').value),m=Number($('month').value),d=Number($('day').value);
+ if(y===2083){
+  const starts=[[2026,3,14],[2026,4,15],[2026,5,15],[2026,6,17],[2026,7,17],[2026,8,17],[2026,9,18],[2026,10,17],[2026,11,16],[2027,0,14],[2027,1,13],[2027,2,15]];
+  let dt=new Date(starts[m][0],starts[m][1],starts[m][2]);dt.setDate(dt.getDate()+d-1);
+  $('adNote').textContent='English date: '+dt.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+ }else $('adNote').textContent='BS date';
+}
+$('year').onchange=()=>{updateDays();$('day').value=1;showADNote()};$('month').onchange=()=>{updateDays();showADNote()};$('day').onchange=showADNote;
+function addItem(product='',price='',qty=1){
+ const r=document.createElement('div');r.className='item';
+ r.innerHTML=`<input class="prod" placeholder="Product name" value="${esc(product)}"><input class="price" type="number" min="0" step="0.01" value="${price}"><input class="qty" type="number" min="1" step="1" value="${qty}"><div class="line-total">Rs. 0</div><button class="remove" onclick="this.parentElement.remove();calc()">×</button>`;
+ r.querySelectorAll('input').forEach(x=>x.addEventListener('input',calc));$('items').appendChild(r);calc()
+}
+function calc(){let t=0;document.querySelectorAll('.item').forEach(r=>{let v=(Number(r.querySelector('.price').value)||0)*(Number(r.querySelector('.qty').value)||0);r.querySelector('.line-total').textContent=money(v);t+=v});$('invoiceTotal').textContent=money(t);let p=Number($('paid').value)||0;$('remaining').textContent=money(Math.max(0,t-p))}
+$('paid').oninput=calc;
+function saveSale(){
+ let customer=$('customer').value.trim(),items=[];
+ document.querySelectorAll('.item').forEach(r=>{let product=r.querySelector('.prod').value.trim(),price=Number(r.querySelector('.price').value)||0,qty=Number(r.querySelector('.qty').value)||0;if(product&&price>0&&qty>0)items.push({product,price,qty})});
+ let total=items.reduce((a,i)=>a+i.price*i.qty,0),paid=Number($('paid').value)||0;
+ if(!customer)return alert('Please enter the customer name.');
+ if(!items.length)return alert('Please add at least one product.');
+ if(paid<0||paid>total)return alert('Paid amount cannot be greater than the total.');
+ sales.push({id:String(Date.now()),date:`${$('year').value}-${String(Number($('month').value)+1).padStart(2,'0')}-${String(Number($('day').value)).padStart(2,'0')}`,year:Number($('year').value),month:Number($('month').value),day:Number($('day').value),customer,items,paid});
+ $('customer').value='';$('paid').value=0;$('items').innerHTML='';addItem();save()
+}
+function render(){
+ let total=sales.reduce((a,s)=>a+totalOf(s),0),paid=sales.reduce((a,s)=>a+Number(s.paid),0);$('totalSales').textContent=money(total);$('totalPaid').textContent=money(paid);$('totalDue').textContent=money(total-paid);
+ let q=$('search').value.toLowerCase(),f=$('filter').value,names=[...new Set(sales.map(s=>s.customer))].sort(),oldf=f;
+ $('filter').innerHTML='<option value="">All customers</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');$('filter').value=names.includes(oldf)?oldf:'';
+ let list=sales.filter(s=>(!q||(`${s.customer} ${s.items.map(i=>i.product).join(' ')}`).toLowerCase().includes(q))&&(!f||s.customer===f)).sort((a,b)=>b.id.localeCompare(a.id));$('count').textContent=list.length+' record'+(list.length===1?'':'s');
+ $('rows').innerHTML=list.length?list.map(s=>{let t=totalOf(s),d=t-s.paid;return `<tr><td><b>${s.year}</b><br>${MONTHS[s.month][0]} ${s.day}</td><td><b>${esc(s.customer)}</b></td><td class="product-lines">${s.items.map(i=>`<span>${esc(i.product)} — ${money(i.price)} × ${i.qty}</span>`).join('')}</td><td>${money(t)}</td><td>${money(s.paid)}</td><td class="${d?'amber':''}">${money(Math.max(0,d))}</td><td><span class="badge ${d?'due':'paid'}">${d?'Due':'Paid'}</span></td><td>${d?`<button class="action" onclick="payment('${s.id}')">Payment</button>`:''}<button class="action" onclick="del('${s.id}')">Delete</button></td></tr>`}).join(''):'<tr><td colspan="8" class="empty">No sales records yet.</td></tr>';
+ let cnames=[...new Set(sales.map(s=>s.customer))].sort();$('customers').innerHTML=cnames.length?cnames.map(name=>{let rs=sales.filter(s=>s.customer===name),t=rs.reduce((a,s)=>a+totalOf(s),0),p=rs.reduce((a,s)=>a+s.paid,0);return `<div class="customer"><div class="customer-head"><h3>${esc(name)}</h3><small>${rs.length} sale${rs.length===1?'':'s'}</small></div><div class="customer-stats"><div><small>Total</small><b>${money(t)}</b></div><div><small>Paid</small><b>${money(p)}</b></div><div><small>Due</small><b class="amber">${money(Math.max(0,t-p))}</b></div></div></div>`}).join(''):'<div class="empty">No customers yet.</div>'
+}
+function payment(id){let s=sales.find(x=>x.id===id),due=totalOf(s)-s.paid,x=prompt(`Current due: ${money(due)}\nPayment amount:`);if(x===null)return;let n=Number(x);if(!n||n<0||n>due)return alert('Invalid payment amount.');s.paid+=n;save()}
+function del(id){if(confirm('Delete this sale?')){sales=sales.filter(s=>s.id!==id);save()}}
+function clearAll(){if(confirm('Delete ALL records?')){sales=[];save()}}
+$('search').oninput=render;$('filter').onchange=render;
+function list(){let q=$('search').value.toLowerCase(),f=$('filter').value;return sales.filter(s=>(!q||(`${s.customer} ${s.items.map(i=>i.product).join(' ')}`).toLowerCase().includes(q))&&(!f||s.customer===f))}
+function dl(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function exportCSV(){let rows=[['BS Date','Customer','Product','Price','Qty','Line Total','Invoice Total','Paid','Due']];list().forEach(s=>s.items.forEach(i=>rows.push([s.date,s.customer,i.product,i.price,i.qty,i.price*i.qty,totalOf(s),s.paid,totalOf(s)-s.paid])));dl(new Blob([rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv'}),'khata-records.csv')}
+function exportWord(){let body=list().map(s=>`<tr><td>${s.date} BS</td><td>${esc(s.customer)}</td><td>${s.items.map(i=>`${esc(i.product)} — ${money(i.price)} × ${i.qty}`).join('<br>')}</td><td>${money(totalOf(s))}</td><td>${money(s.paid)}</td><td>${money(totalOf(s)-s.paid)}</td></tr>`).join('');dl(new Blob([`<html><body><h1>Sales Report</h1><table border="1" cellpadding="7" cellspacing="0"><tr><th>BS Date</th><th>Customer</th><th>Products</th><th>Total</th><th>Paid</th><th>Due</th></tr>${body}</table></body></html>`],{type:'application/msword'}),'khata-report.doc')}
+function printReport(){window.print()}
+function backup(){dl(new Blob([JSON.stringify(sales,null,2)],{type:'application/json'}),'khata-backup.json')}
+setupDates();render();updateBackupStatus();
+
+</script>cation/json'}),'khata-backup.json')}
+setupDates();render();
+</script>
+</body>
+</html>
